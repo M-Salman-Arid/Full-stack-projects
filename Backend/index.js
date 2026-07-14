@@ -7,9 +7,12 @@ const cors = require("cors")
 const userRoutes = require("./routes/userRoutes")
 const imageRoutes = require("./routes/imageRouter")
 const contactRoutes = require("./routes/contactRouter")
+const path = require("path")
+
 
 const app = express()
 
+app.use(morgan("dev"))
 app.use(cors({
     origin: true,
     credentials: true
@@ -21,8 +24,7 @@ app.use(express.urlencoded({
 app.use(userRoutes)
 app.use(imageRoutes)
 app.use(contactRoutes)
-app.use(express.static("public"))
-app.use(morgan("dev"))
+app.use(express.static(path.join(__dirname, "public/uploads")))
 
 
 

@@ -23,7 +23,8 @@ function Projects() {
         "All",
         "React",
         "JavaScript",
-        "HTML"
+        "Backend",
+        "AI"
     ];
 
     const filteredProjects = projects.filter((project) => {

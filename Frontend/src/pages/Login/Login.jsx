@@ -69,7 +69,11 @@ function Login() {
 
                         <div className="line"></div>
 
-                        <p className="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper mauris in magna venenatis suscipit.</p>
+                        <p className="details">Want to visit the website --- Continue with Test User <br />
+                            <strong>Email :</strong> test@example.com <br />
+                            <strong>Password:</strong> test1234 <br />
+                            <strong> Role : </strong> User
+                        </p>
 
                         <button className="learn-more">Learn More</button>
                     </div>

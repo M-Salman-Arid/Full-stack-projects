@@ -16,15 +16,40 @@ function ForgotPassword() {
         password: ""
     })
 
+    const [passwordError, setPasswordError] = useState("")
+
     const handelChange = (e) => {
+
+        const { name, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: value
         })
+
+        if (name === "password") {
+
+            const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+
+            if (value === "") {
+                setPasswordError("")
+            } else if (!passwordRegex.test(value)) {
+                setPasswordError(
+                    "Password must at least 8 character, one number and one special character"
+                )
+            } else {
+                setPasswordError("")
+            }
+        }
     }
 
     const handelSubmit = async (e) => {
         e.preventDefault();
+
+        if (passwordError) {
+            alert("Please Enter a valid password")
+            return;
+        }
 
         try {
 
@@ -57,7 +82,11 @@ function ForgotPassword() {
 
                         <div className="line"></div>
 
-                        <p className="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper mauris in magna venenatis suscipit.</p>
+                        <p className="details">Want to visit the website --- Continue with Test User <br />
+                            <strong>Email :</strong> test@example.com <br />
+                            <strong>Password:</strong> test1234 <br />
+                            <strong> Role : </strong> User
+                        </p>
 
                         <button className="learn-more">Learn More</button>
                     </div>
@@ -96,7 +125,11 @@ function ForgotPassword() {
 
                             </div>
 
-                            <button className="fp-btn" type="submit">Reset</button>
+                            {passwordError && (
+                                <p style={{ color: 'orange', fontSize: "12px" }}>{passwordError}</p>
+                            )}
+
+                            <button className="fp-btn" type="submit" disabled={passwordError !== ""}>Reset</button>
                         </form>
 
                         <p >

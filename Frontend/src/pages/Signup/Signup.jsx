@@ -10,6 +10,7 @@ function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -17,15 +18,40 @@ function SignUp() {
     role: "user"
   })
 
+  const [passwordError, setPasswordError] = useState("")
+
   const handelChange = (e) => {
+
+    const { name, value } = e.target;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+
+    if (name === "password") {
+
+      const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+
+      if (value === "") {
+        setPasswordError("")
+      } else if (!passwordRegex.test(value)) {
+        setPasswordError(
+          "Password must at least 8 character, one number and one special character"
+        )
+      } else {
+        setPasswordError("")
+      }
+    }
   }
 
   const handelSubmit = async (e) => {
     e.preventDefault();
+
+    if (passwordError) {
+      alert("Please Enter a valid password")
+      return;
+    }
 
     try {
       const response = await API.post(
@@ -59,9 +85,11 @@ function SignUp() {
 
             <div className="line"></div>
 
-            <div className="details">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper mauris in magna venenatis suscipit.
-            </div>
+            <p className="details">Want to visit the website --- Continue with Test User <br />
+              <strong>Email :</strong> test@example.com <br />
+              <strong>Password:</strong> test1234 <br />
+              <strong> Role : </strong> User
+            </p>
 
             <button className="learn-more">Learn More</button>
           </div>
@@ -99,8 +127,12 @@ function SignUp() {
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
 
+
               </div>
 
+              {passwordError && (
+                <p style={{ color: 'orange', fontSize: "12px" }}>{passwordError}</p>
+              )}
               <label htmlFor="role">Select Role</label>
 
               <select name="role" id="role" className="role" value={formData.role} onChange={handelChange}>
@@ -109,7 +141,8 @@ function SignUp() {
                 <option value="admin">Admin</option>
               </select>
 
-              <button type="submit" className="signup-btn">Sign Up</button>
+              <button type="submit" className="signup-btn" disabled={passwordError !== ""}>Sign Up</button>
+
             </form>
 
           </div>

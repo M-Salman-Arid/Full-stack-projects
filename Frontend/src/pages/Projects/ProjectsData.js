@@ -5,8 +5,28 @@ import youtube from "../../assets/images/youtube.png";
 import calculator from "../../assets/images/calculator.png";
 import rps from "../../assets/images/rps.png";
 import ecommerce from "../../assets/images/ecommerce.png";
+import imageValidation from "../../assets/images/image-validation.png";
 
 const projects = [
+
+        {
+        id: 5,
+
+        title: "Upload Image validator",
+
+        category: "Backend",
+
+        tags: ["Node js", "Validation", "Backend"],
+
+        image: imageValidation,
+
+        description:
+            "Created a Secure image uploader with file validation, size limits, and instant preview.",
+
+        github: "http://github.com/M-Salman-Arid/",
+
+        demo: "http://localhost:5173/projects/upload"
+    },
 
     {
         id: 4,
@@ -70,7 +90,7 @@ const projects = [
 
         title: "YouTube Clone",
 
-        category: "HTML",
+        category: "React",
 
         tags: ["HTML", "CSS", "Frontend"],
 

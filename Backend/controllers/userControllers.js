@@ -35,6 +35,7 @@ const createUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
+        console.log(hashedPassword)
 
         const result = await userModel.createUser(username, email, hashedPassword, role)
         const verificationToken = crypto.randomBytes(32).toString("hex");
@@ -68,7 +69,7 @@ const createUser = async (req, res) => {
                 padding:12px 20px;
                 text-decoration:none;
                 border-radius:8px;
-                margin-bottom:10px;
+                margin-top :10px;
            ">
             Verify Account
         </a>

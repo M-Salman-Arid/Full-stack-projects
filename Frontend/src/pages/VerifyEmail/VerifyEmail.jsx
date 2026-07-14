@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../../api/axios";
+import "./VerifyEmail.css"
 
 function VerifyEmail() {
 
@@ -9,6 +10,7 @@ function VerifyEmail() {
     const navigate = useNavigate();
 
     const [message, setMessage] = useState("Verifying your email...");
+
 
     useEffect(() => {
 
