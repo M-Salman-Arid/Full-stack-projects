@@ -11,7 +11,7 @@ import {
     FaSearch
 } from "react-icons/fa";
 
-import projects from "./projectsData";
+import projects from "./ProjectsData";
 
 function Projects() {
 
