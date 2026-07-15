@@ -5,8 +5,9 @@ const connectDB = require("./config/db")
 const morgan = require("morgan")
 const cors = require("cors")
 const userRoutes = require("./routes/userRoutes")
-const imageRoutes = require("./routes/imageRouter")
 const contactRoutes = require("./routes/contactRouter")
+const imageRoutes = require("./routes/imageRouter")
+const searchRoute = require("./routes/searchRoute")
 const path = require("path")
 
 
@@ -24,15 +25,18 @@ app.use(express.urlencoded({
 app.use(userRoutes)
 app.use(imageRoutes)
 app.use(contactRoutes)
-app.use(express.static(path.join(__dirname, "public/uploads")))
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+app.use("/videos", searchRoute)
 
 
-
+app.get("/", (req, res) => {
+    res.send("server is running")
+})
 connectDB()
 
 const PORT = process.env.PORT || 4000
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log(`Server is running on the port ${PORT}`)
 })
 

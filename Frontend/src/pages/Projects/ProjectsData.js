@@ -25,7 +25,7 @@ const projects = [
 
         github: "http://github.com/M-Salman-Arid/",
 
-        demo: "http://localhost:5173/projects/upload"
+        demo: "http://localhost:5173/projects/image-validation"
     },
 
     {

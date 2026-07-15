@@ -8,6 +8,7 @@ import Services from "./pages/Services/Services"
 import Contact from "./pages/ContactUs/Contact"
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
 import Upload from "./pages/Upload/Upload"
+import Search from "./pages/Search/Search"
 import { Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/ProtectedRoutes"
 
@@ -26,7 +27,8 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/projects/upload" element={<Upload />} />
+        <Route path="/projects/image-validation" element={<Upload />} />
+        <Route path="/projects/search-video" element={<Search />} />
       </Route>
     </Routes>
   )
