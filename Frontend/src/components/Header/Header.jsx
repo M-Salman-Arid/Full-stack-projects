@@ -1,16 +1,18 @@
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import API from "../../api/axios"
+import { FaBars, FaTimes } from "react-icons/fa";
+import API from "../../api/axios";
 
 function Header() {
 
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     const [user, setUser] = useState({
         username: "",
         email: ""
-    })
+    });
 
     useEffect(() => {
 
@@ -41,11 +43,13 @@ function Header() {
     }, []);
 
     const navigate = useNavigate();
-    const logout = () => {
-        localStorage.removeItem("token");
-        navigate("/")
-    }
 
+    const logout = () => {
+
+        localStorage.removeItem("token");
+        navigate("/");
+
+    };
 
     const deleteAccount = async () => {
 
@@ -60,11 +64,9 @@ function Header() {
             const token = localStorage.getItem("token");
 
             const response = await API.delete("/delete", {
-
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-
             });
 
             alert(response.data.message);
@@ -81,23 +83,98 @@ function Header() {
 
     };
 
-
     return (
+
         <header className="header">
+
             <div className="logo">
                 <Link to="/home">
                     <h1>M-Salman</h1>
                 </Link>
             </div>
 
-            <nav className="nav-links">
-                <Link to="/about">About Me</Link>
-                <Link to="/services">Services</Link>
-                <Link to="/projects">Projects</Link>
-                <Link to="/contact">Contact Me</Link>
+            {/* Hamburger Button */}
+            <div
+                className="menu-toggle"
+                onClick={() => setShowMenu(!showMenu)}
+            >
+                {showMenu ? <FaTimes /> : <FaBars />}
+            </div>
+
+            {/* Navigation */}
+            <nav className={`nav-links ${showMenu ? "active" : ""}`}>
+
+                <Link
+                    to="/about"
+                    onClick={() => setShowMenu(false)}
+                >
+                    About Me
+                </Link>
+
+                <Link
+                    to="/services"
+                    onClick={() => setShowMenu(false)}
+                >
+                    Services
+                </Link>
+
+                <Link
+                    to="/projects"
+                    onClick={() => setShowMenu(false)}
+                >
+                    Projects
+                </Link>
+
+                <Link
+                    to="/contact"
+                    onClick={() => setShowMenu(false)}
+                >
+                    Contact Me
+                </Link>
+
+                {/* Mobile Profile */}
+                <div className="mobile-profile">
+
+                    <button
+                        className="logout-btn"
+                        onClick={() => setShowDropdown(!showDropdown)}
+                    >
+                        Your Profile ▼
+                    </button>
+
+                    {showDropdown && (
+
+                        <div className="mobile-dropdown">
+
+                            <div className="profile-info">
+                                <h3>{user.username}</h3>
+                                <p>{user.email}</p>
+                            </div>
+
+                            <button
+                                className="profile-item"
+                                onClick={logout}
+                            >
+                                🚪 Logout
+                            </button>
+
+                            <button
+                                className="profile-item delete-account"
+                                onClick={deleteAccount}
+                            >
+                                🗑 Delete Account
+                            </button>
+
+                        </div>
+
+                    )}
+
+                </div>
+
             </nav>
 
-            <div className="profile-menu">
+            {/* Desktop Profile */}
+            <div className="profile-menu desktop-profile">
 
                 <button
                     className="logout-btn"
@@ -122,7 +199,10 @@ function Header() {
                             🚪 Logout
                         </button>
 
-                        <button className="profile-item delete-account" onClick={deleteAccount}>
+                        <button
+                            className="profile-item delete-account"
+                            onClick={deleteAccount}
+                        >
                             🗑 Delete Account
                         </button>
 
@@ -131,7 +211,9 @@ function Header() {
                 )}
 
             </div>
+
         </header>
+
     );
 }
 
