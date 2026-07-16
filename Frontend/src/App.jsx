@@ -6,7 +6,7 @@ import About from "./pages/About/About"
 import Projects from "./pages/Projects/Projects"
 import Services from "./pages/Services/Services"
 import Contact from "./pages/ContactUs/Contact"
-import VerifyEmail from "./pages/VerifyEmail/VerifyEmail"
+import OTPVerification from "./pages/VerifyEmail/VerifyOTP"
 import Upload from "./pages/Upload/Upload"
 import Search from "./pages/Search/Search"
 import { Routes, Route } from "react-router-dom"
@@ -16,13 +16,13 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
-      <Route path="/verify/:token" element={<VerifyEmail />} />
+      <Route path="/verify-OTP" element={<OTPVerification />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/projects" element={<Projects />} />

@@ -34,7 +34,7 @@ function Contact() {
       )
 
       alert("Form Submitted 👌 We will conatact you ...");
-      navigate("/home");
+      navigate("/");
     } catch(error) {
       console.error("Form submitted failed", error);
       alert(error?.response?.data?.message || "Form submit failed . Please try again");

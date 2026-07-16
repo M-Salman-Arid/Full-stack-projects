@@ -74,7 +74,7 @@ function Footer() {
 
                     <h3>Navigation</h3>
 
-                    <Link to="/home">Home</Link>
+                    <Link to="/">Home</Link>
 
                     <Link to="/about">About</Link>
 

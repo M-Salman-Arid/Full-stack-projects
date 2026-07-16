@@ -48,30 +48,30 @@ const deleteAccount = async (id) => {
     return result
 }
 
-const saveVerificationToken = async (userId, token) => {
+const saveOTP = async (userId, otp, expiry) => {
 
     const connection = await connectDB();
 
     await connection.execute(
         `UPDATE users
-         SET verification_token = ?
+         SET email_otp = ?, otp_expires_at = ?
          WHERE id = ?`,
-        [token, userId]
+        [otp, expiry , userId]
     );
 
     await connection.end();
 
 };
 
-const getUserByVerificationToken = async (token) => {
+const getUserByEmail = async (email) => {
 
     const connection = await connectDB();
 
     const [rows] = await connection.execute(
         `SELECT *
          FROM users
-         WHERE verification_token = ?`,
-        [token]
+         WHERE email = ?`,
+        [email]
     );
 
     await connection.end();
@@ -80,16 +80,17 @@ const getUserByVerificationToken = async (token) => {
 
 };
 
-const verifyUser = async (token) => {
+const verifyUser = async (id) => {
 
     const connection = await connectDB();
 
     const [result] = await connection.execute(
         `UPDATE users
          SET is_verified = TRUE,
-             verification_token = NULL
-         WHERE verification_token = ?`,
-        [token]
+         email_otp = null,
+         otp_expires_at = null
+         WHERE id = ?`,
+        [id]
     );
 
     await connection.end();
@@ -103,7 +104,7 @@ module.exports = {
     loginUser,
     UpdateUserPassword,
     deleteAccount,
-    saveVerificationToken,
-    getUserByVerificationToken,
+    saveOTP,
+    getUserByEmail,
     verifyUser
 }

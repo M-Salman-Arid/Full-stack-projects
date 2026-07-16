@@ -47,7 +47,7 @@ function Header() {
     const logout = () => {
 
         localStorage.removeItem("token");
-        navigate("/");
+        navigate("/login");
 
     };
 
@@ -73,7 +73,7 @@ function Header() {
 
             localStorage.removeItem("token");
 
-            navigate("/");
+            navigate("/login");
 
         } catch (error) {
 
@@ -88,7 +88,7 @@ function Header() {
         <header className="header">
 
             <div className="logo">
-                <Link to="/home">
+                <Link to="/">
                     <h1>M-Salman</h1>
                 </Link>
             </div>

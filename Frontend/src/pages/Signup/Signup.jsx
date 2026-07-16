@@ -59,8 +59,11 @@ function SignUp() {
         formData
       )
 
-      alert("SignUp successfull. Now login to continue ...");
-      navigate("/");
+      navigate("/verify-OTP" , {
+        state: {
+          email: formData.email
+        }
+      })
     } catch (error) {
       console.error("Signup failed:", error);
       alert(error?.response?.data?.message || "Signup failed. Please try again.");
@@ -71,8 +74,6 @@ function SignUp() {
     <>
 
       <section className="signup-section">
-
-        <h1 className="company-name">Webevis Technologies</h1>
 
         <div className="signup-container">
 
@@ -85,10 +86,7 @@ function SignUp() {
 
             <div className="line"></div>
 
-            <p className="details">Want to visit the website --- Continue with Test User <br />
-              <strong>Email :</strong> test@example.com <br />
-              <strong>Password:</strong> test1234 <br />
-              <strong> Role : </strong> User
+            <p className="details">We will help you to build your dream project and idea. <br /> <strong>Do you have any idea?</strong>
             </p>
 
             <button className="learn-more">Learn More</button>

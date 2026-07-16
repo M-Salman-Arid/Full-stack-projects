@@ -1,7 +1,7 @@
 const userModel = require("../models/userModel")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const e = require("express");
 const jwt = require("jsonwebtoken")
-const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -35,46 +35,35 @@ const createUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
-        console.log(hashedPassword)
 
         const result = await userModel.createUser(username, email, hashedPassword, role)
-        const verificationToken = crypto.randomBytes(32).toString("hex");
-        await userModel.saveVerificationToken(
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        await userModel.saveOTP(
             result.insertId,
-            verificationToken
+            otp,
+            new Date(Date.now() + 10 * 60 * 1000)
         );
-
-        const verificationLink =
-            `http://localhost:5173/verify/${verificationToken}`;
-
         await transporter.sendMail({
 
             from: process.env.EMAIL,
 
             to: email,
 
-            subject: "Verify Your Email",
+            subject: "Email Verification OTP",
 
             html: `
-        <h2>Welcome ${username}</h2>
+        <h2>Hello ${username}</h2>
 
-        <p>Thank you for signing up.</p>
+        <p>Your verification code is:</p>
 
-        <p>Please click the button below to verify your account.</p>
+        <h1 style="letter-spacing:6px;color:#ff7448;">
+            ${otp}
+        </h1>
 
-        <a href="${verificationLink}"
-           style="
-                background:#ff7448;
-                color:white;
-                padding:12px 20px;
-                text-decoration:none;
-                border-radius:8px;
-                margin-top :10px;
-           ">
-            Verify Account
-        </a>
+        <p>This OTP is valid for 10 minutes.</p>
+
+        <p>Do not share this code with anyone.</p>
     `
-
         });
 
         res.status(201).json({
@@ -86,24 +75,39 @@ const createUser = async (req, res) => {
     }
 }
 
-const verifyEmail = async (req, res) => {
+const verifyOTP = async (req, res) => {
 
-    try {  
+    try {
 
-        const { token } = req.params;
+        const {email, otp} = req.body;
 
-        const user =
-            await userModel.getUserByVerificationToken(token);
+        console.log(email, otp)
+
+        const user = await userModel.getUserByEmail(email);
 
         if (!user) {
 
             return res.status(404).json({
-                message: "Invalid verification link"
+                message: "User not found"
             });
 
         }
 
-        await userModel.verifyUser(token);
+        if(user.email_otp !== otp) {
+
+            return res.status(400).json({
+                message : "Invalid OTP"
+            })
+        }
+
+        if(new Date() > new Date(user.otp_expires_at)) {
+
+            return res.status(400).json({
+                message : "OTP has been expired"
+            })
+        }
+
+        await userModel.verifyUser(user.id);
 
         return res.status(200).json({
             message: "Email verified successfully"
@@ -262,7 +266,7 @@ const getProfile = async (req, res) => {
 
 module.exports = {
     createUser,
-    verifyEmail,
+    verifyOTP,
     loginUser,
     updateUser,
     deleteAccount,
