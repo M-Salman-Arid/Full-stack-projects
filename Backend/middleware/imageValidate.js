@@ -1,27 +1,6 @@
 const multer = require("multer");
-const path = require("path");
 
-const storage = multer.diskStorage({
-
-    destination: (req, file, cb) => {
-
-        cb(null, "public/uploads/");
-
-    },
-
-    filename: (req, file, cb) => {
-
-        const uniqueName =
-            Date.now() +
-            "-" +
-            Math.round(Math.random() * 1000000) +
-            path.extname(file.originalname);
-
-        cb(null, uniqueName);
-
-    }
-
-});
+const storage = multer.memoryStorage()
 
 const upload = multer({
 
@@ -29,7 +8,7 @@ const upload = multer({
 
     limits: {
 
-        fileSize: 2000 * 1024
+        fileSize: 200 * 1024
 
     },
 

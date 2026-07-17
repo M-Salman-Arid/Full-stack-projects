@@ -1,3 +1,8 @@
+body {
+    background: linear-gradient(135deg, #0f172a, #1e1b4b);
+}
+
+
 .search-page {
 
     min-height: 100vh;
@@ -100,6 +105,81 @@
 .search-bar button:hover {
 
     background: #ff7c53;
+}
+
+/* ==========================
+   Search Container
+========================== */
+
+.search-bar-container {
+
+    position: relative;
+
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto 50px;
+}
+
+/* ==========================
+   Suggestion Box
+========================== */
+
+.suggestion-box {
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 0;
+
+    width: 100%;
+
+    background: #252944;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    z-index: 1000;
+
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================
+   Suggestion Item
+========================== */
+
+.suggestion-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px 22px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.suggestion-item:hover {
+
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Divider */
+
+.suggestion-item:not(:last-child) {
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* =======================

@@ -1,5 +1,5 @@
 
-const connectDB = require("../config/db")
+const connectDB = require("../config/userDB")
 
 const newContact = async (name, email, phone, message) => {
 

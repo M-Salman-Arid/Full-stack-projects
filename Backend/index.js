@@ -1,7 +1,7 @@
 
 const express = require("express")
 const dotenv = require("dotenv").config()
-const connectDB = require("./config/db")
+const connectDB = require("./config/userDB")
 const morgan = require("morgan")
 const cors = require("cors")
 const userRoutes = require("./routes/userRoutes")
@@ -25,8 +25,8 @@ app.use(express.urlencoded({
 app.use(userRoutes)
 app.use(imageRoutes)
 app.use(contactRoutes)
-app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 app.use("/videos", searchRoute)
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 
 app.get("/", (req, res) => {

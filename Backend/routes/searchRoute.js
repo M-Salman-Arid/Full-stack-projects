@@ -1,9 +1,9 @@
 
-const {searchVideo} = require("../controllers/serachController")
+const { searchVideo, getVideos, searchSuggestion} = require("../controllers/serachController")
 const express = require("express")
 const router = express.Router()
 
-
-router.get("/search" , searchVideo)
-
+router.get("/", getVideos)
+router.get("/search", searchVideo)
+router.get("/suggestion", searchSuggestion)
 module.exports = router

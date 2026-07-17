@@ -1,6 +1,19 @@
 
-const connectDB = require("../config/db")
+const connectDB = require("../config/userDB")
 
+const getVideos = async () => {
+
+    const connection = await connectDB();
+
+    const [videos] = await connection.execute(
+        "SELECT * FROM videos LIMIT 10"
+    )
+
+    await connection.end()
+
+    return videos
+    
+}
 
 const searchVideos = async (search) => {
 
@@ -17,5 +30,6 @@ const searchVideos = async (search) => {
 }
 
 module.exports = {
-    searchVideos
+    getVideos,
+    searchVideos,
 }

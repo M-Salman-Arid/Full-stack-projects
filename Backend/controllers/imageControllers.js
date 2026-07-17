@@ -18,7 +18,7 @@ const newImage = async (req, res) => {
 
             req.file.originalname,
 
-            req.file.path,
+            req.file.buffer,
 
             req.file.mimetype,
 
@@ -34,7 +34,7 @@ const newImage = async (req, res) => {
 
                 imageName: req.file.originalname,
 
-                imagePath: req.file.path,
+                imageData: req.file.buffer,
 
                 imageType: req.file.mimetype,
 

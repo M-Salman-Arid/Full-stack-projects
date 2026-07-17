@@ -10,16 +10,21 @@ import OTPVerification from "./pages/VerifyEmail/VerifyOTP"
 import Upload from "./pages/Upload/Upload"
 import Search from "./pages/Search/Search"
 import { Routes, Route } from "react-router-dom"
-import ProtectedRoute from "./components/ProtectedRoutes"
+import ProtectedRoute from "./routes/ProtectedRoutes"
+import PublicRoute from "./routes/PublicRoutes"
+import UploadVideo from "./components/UploadVideo/UploadVideo"
 
 function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/forgotpassword" element={<ForgotPassword />} />
-      <Route path="/verify-OTP" element={<OTPVerification />} />
+
+      <Route element={<PublicRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/verify-OTP" element={<OTPVerification />} />
+      </Route>
 
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Home />} />
@@ -29,6 +34,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/projects/image-validation" element={<Upload />} />
         <Route path="/projects/search-video" element={<Search />} />
+        <Route path="/upload-video" element={<UploadVideo/>} />
       </Route>
     </Routes>
   )

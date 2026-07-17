@@ -1,5 +1,5 @@
 
-const connectDB = require("../config/db")
+const connectDB = require("../config/userDB")
 
 const createUser = async (username, email, password, role) => {
     const connection = await connectDB()
