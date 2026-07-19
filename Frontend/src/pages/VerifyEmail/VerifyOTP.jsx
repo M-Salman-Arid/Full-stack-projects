@@ -40,6 +40,29 @@ function OTPVerification() {
 
     };
 
+    const resendOTP = async () => {
+
+        try {
+
+            const email = localStorage.getItem("verificationEmail")
+            
+
+            const response = await API.post("/resend-otp", {
+                email
+            })
+
+            setMessage(
+                response.data.message || "Unable to send otp"
+            )
+            
+        } catch (error) {
+
+            setMessage(
+                error.response?.data.message || "Verification failed.!"
+            )
+        }
+    }
+
     return (
 
         <div className="verify-page">
@@ -84,7 +107,7 @@ function OTPVerification() {
 
                     Didn't receive the code?
 
-                    <button type="button">
+                    <button onClick={resendOTP}>
                         Resend OTP
                     </button>
 

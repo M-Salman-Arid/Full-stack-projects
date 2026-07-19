@@ -4,7 +4,8 @@ const {
     loginUser,
     updateUser, 
     deleteAccount, 
-    getProfile
+    getProfile,
+    resendOTP
 } = require("../controllers/userControllers");
 
 const verifyToken = require("../middleware/userAuthencation");
@@ -18,6 +19,7 @@ router.post("/login", loginUser);
 router.get("/home", verifyToken, getProfile)
 router.put("/update", updateUser);
 router.delete("/delete", verifyToken, deleteAccount);
+router.post("/resend-otp" , resendOTP)
 
 
 module.exports = router;

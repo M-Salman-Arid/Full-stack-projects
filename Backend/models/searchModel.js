@@ -6,7 +6,7 @@ const getVideos = async () => {
     const connection = await connectDB();
 
     const [videos] = await connection.execute(
-        "SELECT * FROM videos LIMIT 10"
+        "SELECT * FROM videos LIMIT 6"
     )
 
     await connection.end()

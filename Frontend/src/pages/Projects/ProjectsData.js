@@ -6,10 +6,30 @@ import calculator from "../../assets/images/calculator.png";
 import rps from "../../assets/images/rps.png";
 import ecommerce from "../../assets/images/ecommerce.png";
 import imageValidation from "../../assets/images/image-validation.png";
+import searchSystem from "../../assets/images/search-system.png";
 
 const projects = [
 
-        {
+    {
+        id: 6,
+
+        title: "Youtube Search system",
+
+        category: "Backend, Node js",
+
+        tags: ["Node js", "Search", "Backend"],
+
+        image: searchSystem,
+
+        description:
+            "Created a search bar that work with full backend, database and Suggestions just like youtube",
+
+        github: "http://github.com/M-Salman-Arid/",
+
+        demo: "http://localhost:5173/projects/youtube"
+    },
+
+    {
         id: 5,
 
         title: "Upload Image validator",

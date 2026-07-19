@@ -33,7 +33,7 @@ function App() {
         <Route path="/projects" element={<Projects />} />
         <Route path="/services" element={<Services />} />
         <Route path="/projects/image-validation" element={<Upload />} />
-        <Route path="/projects/search-video" element={<Search />} />
+        <Route path="/projects/youtube" element={<Search />} />
         <Route path="/upload-video" element={<UploadVideo/>} />
       </Route>
     </Routes>

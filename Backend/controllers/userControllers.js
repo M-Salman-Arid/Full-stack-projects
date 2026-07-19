@@ -1,16 +1,9 @@
 const userModel = require("../models/userModel")
+const sendOTPEmail = require("../utils/sendOTPEmail")
 const bcrypt = require("bcrypt");
-const e = require("express");
+const express = require("express");
 const jwt = require("jsonwebtoken")
-const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD
-    }
-});
 
 const createUser = async (req, res) => {
     try {
@@ -38,35 +31,12 @@ const createUser = async (req, res) => {
 
         const result = await userModel.createUser(username, email, hashedPassword, role)
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        await userModel.saveOTP(
-            result.insertId,
-            otp,
-            new Date(Date.now() + 10 * 60 * 1000)
-        );
-        await transporter.sendMail({
 
-            from: process.env.EMAIL,
+        await userModel.saveOTP( result.insertId, otp, new Date(Date.now() + 10 * 60 * 1000));
 
-            to: email,
+        await sendOTPEmail(email, username, otp);
 
-            subject: "Email Verification OTP",
-
-            html: `
-        <h2>Hello ${username}</h2>
-
-        <p>Your verification code is:</p>
-
-        <h1 style="letter-spacing:6px;color:#ff7448;">
-            ${otp}
-        </h1>
-
-        <p>This OTP is valid for 10 minutes.</p>
-
-        <p>Do not share this code with anyone.</p>
-    `
-        });
-
-        res.status(201).json({
+        return res.status(201).json({
             message: "Signup successful. Please verify your email before logging in.",
             result
         })
@@ -80,8 +50,6 @@ const verifyOTP = async (req, res) => {
     try {
 
         const {email, otp} = req.body;
-
-        console.log(email, otp)
 
         const user = await userModel.getUserByEmail(email);
 
@@ -262,6 +230,49 @@ const getProfile = async (req, res) => {
 
 };
 
+const resendOTP = async (req, res) => {
+
+    try {
+
+        const {email, username} = req.body;
+
+        const user = await userModel.getUserByEmail(email);
+
+        if(!user) {
+            return res.status(404).json({
+                success : false,
+                message : "User not Found"
+            })
+        }
+
+        if(user.is_verified) {
+            return res.status(400).json({
+                success : false, 
+                message: "Email already verififed 👍"
+            })
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        const expiry = new Date(Date.now() + 10 * 60 * 1000);
+
+        await userModel.saveOTP(user.id, otp, expiry);
+
+        await sendOTPEmail(email, username, otp);
+
+        return res.json({
+            success : true,
+            message : "OTP send successfully .. Check your email"
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            message : error.message
+        })
+    }
+    
+}
+
 
 
 module.exports = {
@@ -270,7 +281,8 @@ module.exports = {
     loginUser,
     updateUser,
     deleteAccount,
-    getProfile
+    getProfile,
+    resendOTP
 }
 
 

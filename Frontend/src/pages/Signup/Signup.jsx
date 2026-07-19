@@ -59,6 +59,9 @@ function SignUp() {
         formData
       )
 
+      localStorage.setItem("verificationEmail" , formData.email)
+      localStorage.setItem("userName", formData.username)
+
       navigate("/verify-OTP" , {
         state: {
           email: formData.email
